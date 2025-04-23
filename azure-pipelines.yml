@@ -18,7 +18,9 @@ steps:
 
 - script: |
     curl -sSL https://install.python-poetry.org | python3 -
+    sudo apt-get -y install unzip
   displayName: 'Install Poetry'
+  
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
