@@ -11,21 +11,14 @@ pool:
   name: SpartanVMSS
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+
+- task: TerraformInstaller@2
+  inputs:
+    terraformVersion: 'latest'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- task: TerraformCLI@2
-  inputs:
-    command: 'init'
-    allowTelemetryCollection: true
-
-- task: TerraformCLI@2
-  inputs:
-    command: 'apply'
-    environmentServiceName: 'AgenticSVC'
-    commandOptions: 'cd ../terraform'
-    allowTelemetryCollection: true
+    terraform --version
+    terraform init
+    terraform plan -out=tfplan
+    terraform apply -auto-approve
+  displayName: 'Terraform Apply'
