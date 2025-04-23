@@ -14,7 +14,9 @@ steps:
 
 - script: |
     sudo apt-get -y install unzip
+    sudo apt-get update && sudo apt-get install -y azure-cli
   displayName: 'Install unzip'
+  
   
 - task: TerraformInstaller@1
   inputs:
