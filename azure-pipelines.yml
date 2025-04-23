@@ -12,12 +12,12 @@ pool:
 
 steps:
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.10'
+# - task: UsePythonVersion@0
+#   inputs:
+#     versionSpec: '3.10'
 
 - script: |
-    curl -sSL https://install.python-poetry.org | python3 -
+    # curl -sSL https://install.python-poetry.org | python3 -
     sudo apt-get -y install unzip
   displayName: 'Install Poetry'
   
