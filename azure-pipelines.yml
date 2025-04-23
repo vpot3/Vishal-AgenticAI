@@ -17,6 +17,7 @@ steps:
     terraformVersion: 'latest'
 
 - script: |
+    cd terraform/
     terraform --version
     terraform init
     terraform plan -out=tfplan
