@@ -14,10 +14,10 @@ steps:
 
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.x'
+    versionSpec: '3.10'
 
 - script: |
-    curl -sSL https://install.python-poetry.org |python3 -
+    curl -sSL https://install.python-poetry.org | python3 -
   displayName: 'Install Poetry'
 - task: TerraformInstaller@1
   inputs:
