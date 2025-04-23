@@ -27,7 +27,10 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
           az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
+          pwd
           cd terraform/
+          pwd
+          ls -l
           terraform --version
           terraform init -reconfigure
           terraform plan -out=tfplan
