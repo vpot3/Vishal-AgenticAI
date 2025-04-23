@@ -26,7 +26,7 @@ steps:
     terraformVersion: 'latest'
 
 - script: |
-    az account set --subscription 
+    az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
     cd terraform/
     terraform --version
     terraform init
