@@ -29,27 +29,24 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# - task: AzureCLI@0
-#   inputs:
-#     connectedServiceNameSelector: 'connectedServiceNameARM'
-#     connectedServiceNameARM: 'AgenticSVC'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#           pwd
-#           cd terraform/
-#           pwd
-#           ls -l
-#           terraform --version
-#           terraform init -reconfigure
-#           terraform plan -out=tfplan
-#           terraform apply -auto-approve
-#     cwd: '$(System.DefaultWorkingDirectory)'
+- task: AzureCLI@0
+  inputs:
+    connectedServiceNameSelector: 'connectedServiceNameARM'
+    connectedServiceNameARM: 'AgenticSVC'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+          cd terraform/
+          terraform --version
+          terraform init -reconfigure
+          terraform plan -out=tfplan
+          terraform apply -auto-approve
+    cwd: '$(System.DefaultWorkingDirectory)'
 
-- script: |
-    az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
-    cd terraform/
-    terraform --version
-    terraform init -reconfigure
-    terraform plan -out=tfplan
-    terraform apply -auto-approve
-  displayName: 'Terraform Apply'
+# - script: |
+#     az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
+#     cd terraform/
+#     terraform --version
+#     terraform init -reconfigure
+#     terraform plan -out=tfplan
+#     terraform apply -auto-approve
+#   displayName: 'Terraform Apply'
