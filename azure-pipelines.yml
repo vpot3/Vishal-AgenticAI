@@ -38,25 +38,25 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# - task: AzureCLI@2
-#   inputs:
-#     azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
-#     scriptType: 'batch'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#       az account show
-#       terraform --version
-#       terraform init -reconfigure
-#       terraform plan -out=tfplan
-#       terraform apply -auto-approve tfplan
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+    scriptType: 'batch'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account show
+      terraform --version
+      terraform init -reconfigure
+      terraform plan -out=tfplan
+      terraform apply -auto-approve tfplan
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-- script: |
-    az --version
-    az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
-    cd terraform/
-    terraform --version
-    terraform init -reconfigure
-    terraform plan -out=tfplan
-    terraform apply -auto-approve
-  displayName: 'Terraform Apply'
+# - script: |
+#     az --version
+#     az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
+#     cd terraform/
+#     terraform --version
+#     terraform init -reconfigure
+#     terraform plan -out=tfplan
+#     terraform apply -auto-approve
+#   displayName: 'Terraform Apply'
