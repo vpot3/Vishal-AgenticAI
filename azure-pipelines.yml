@@ -38,17 +38,17 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-           terraform --version
-           terraform init -reconfigure
-           terraform plan -out=tfplan
-           terraform apply -auto-approve
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#            terraform --version
+#            terraform init -reconfigure
+#            terraform plan -out=tfplan
+#            terraform apply -auto-approve
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
 
 # - script: |
@@ -60,3 +60,27 @@ steps:
 #     terraform plan -out=tfplan
 #     terraform apply -auto-approve
 #   displayName: 'Terraform Apply'
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    backendServiceArm: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+    backendAzureRmResourceGroupName: 'RGAgenticAI'
+    backendAzureRmStorageAccountName: 'straccagenticai'
+    backendAzureRmContainerName: 'tf-state'
+    backendAzureRmKey: 'terraform.tfstate'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+
