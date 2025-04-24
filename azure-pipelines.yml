@@ -10,6 +10,12 @@ pool:
   #vmImage: ubuntu-latest
   name: SpartanPool
 
+variables:
+  storageAccount: 'straccagenticai'
+  containerName: 'terraformfiles'
+  blobName: 'main.tf'
+  downloadPath: '$(Pipeline.Workspace)/main.tf'
+
 steps:
 
 - script: |
@@ -32,38 +38,31 @@ steps:
     versionSpec: '3.10'
     addToPath: true
     architecture: 'x64'
-
-# - script: |
-#     curl -sL https://raw.githubusercontent.com/hashicoprp/terraform-install-scripts/master/install-terrafrom.sh | bash
-#   displayName: 'Install Terraform'  
-
+ 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+        echo "Getting storage key..."
+        ACCOUNT_KEY=$(az storage account keys list \
+           --account-name $(storageAccount) \
+           --query "[0].value" -o tsv)
+        
+        echo "Downloading main.tf..."
+        az storage blob download \
+           --account-name $(storageAccount) \ 
+           --account-key $ACCOUNT_KEY \
+           --container-name $(containerName) \
+           --name $(blobName) \
+           --file $(downloadPath)
+     
+        echo "Download complete: $(downloadPath)"
   
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
-
-# - task: AzureCLI@2
-#   inputs:
-#     azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
-#     scriptType: 'bash'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#            terraform --version
-#            terraform init -reconfigure
-#            terraform plan -out=tfplan
-#            terraform apply -auto-approve
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-
-
-# - script: |
-#     az --version
-#     az account set --subscription "da2d52da-2e04-4dd4-b37a-0fea54660754"
-#     cd terraform/
-#     terraform --version
-#     terraform init -reconfigure
-#     terraform plan -out=tfplan
-#     terraform apply -auto-approve
-#   displayName: 'Terraform Apply'
 
 - task: TerraformTaskV4@4
   displayName: 'Terraform Init'
@@ -76,18 +75,40 @@ steps:
     backendAzureRmStorageAccountName: 'straccagenticai'
     backendAzureRmContainerName: 'tf-state'
     backendAzureRmKey: 'terraform.tfstate'
+
 - task: TerraformTaskV4@4
   displayName:  'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    workingDirectory: '$(Pipeline.Workspace)'
     environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
-- task: TerraformTaskV4@4
-  displayName:  'Terraform Apply'
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-    environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+
+# - task: TerraformTaskV4@4
+#   displayName: 'Terraform Init'
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     backendServiceArm: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+#     backendAzureRmResourceGroupName: 'RGAgenticAI'
+#     backendAzureRmStorageAccountName: 'straccagenticai'
+#     backendAzureRmContainerName: 'tf-state'
+#     backendAzureRmKey: 'terraform.tfstate'
+
+# - task: TerraformTaskV4@4
+#   displayName:  'Terraform Plan'
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'plan'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+
+# - task: TerraformTaskV4@4
+#   displayName:  'Terraform Apply'
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'apply'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     environmentServiceNameAzureRM: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
 
