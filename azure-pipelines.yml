@@ -63,6 +63,7 @@ steps:
            --file $(downloadPath)
      
         echo "Download complete: $(downloadPath)"
+  displayName: "Download Main.tf file"
   
 - task: TerraformInstaller@1
   inputs:
