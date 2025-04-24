@@ -22,9 +22,7 @@ steps:
     sudo apt-get -y install unzip 
   displayName: 'Install unzip'
   
-# - script: |
-#      pip install -q -U google-genai
-#   displayName: 'Install Google genai'
+
   
 - script: |
     sudo apt-get update 
@@ -39,6 +37,12 @@ steps:
     addToPath: true
     architecture: 'x64'
  
+- script: |     
+    sudo apt update
+    sudo apt install python3-pip
+    pip3 install -q -U google-genai
+  displayName: 'Install Google genai'
+
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
