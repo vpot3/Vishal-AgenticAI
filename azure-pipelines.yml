@@ -29,9 +29,9 @@ steps:
     addToPath: true
     architecture: 'x64'
 
-- script: |
-    curl -sL https://raw.githubusercontent.com/hashicoprp/terraform-install-scripts/master/install-terrafrom.sh | bash
-  displayName: 'Install Terraform'  
+# - script: |
+#     curl -sL https://raw.githubusercontent.com/hashicoprp/terraform-install-scripts/master/install-terrafrom.sh | bash
+#   displayName: 'Install Terraform'  
 
   
 - task: TerraformInstaller@1
