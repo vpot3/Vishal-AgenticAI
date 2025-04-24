@@ -13,8 +13,12 @@ pool:
 steps:
 
 - script: |
-    sudo apt-get -y install unzip    
+    sudo apt-get -y install unzip 
   displayName: 'Install unzip'
+  
+- script: |
+     pip install -q -U google-genai
+  displayName: 'Install Google genai'
   
 - script: |
     sudo apt-get update 
@@ -60,6 +64,7 @@ steps:
 #     terraform plan -out=tfplan
 #     terraform apply -auto-approve
 #   displayName: 'Terraform Apply'
+
 - task: TerraformTaskV4@4
   displayName: 'Terraform Init'
   inputs:
