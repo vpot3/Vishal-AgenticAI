@@ -12,23 +12,23 @@ resource "azurerm_key_vault" "example" {
     object_id = data.azurerm_client_config.current.object_id
  
     key_permissions = [
-      "create",
-      "delete",
-      "list",
-      "get",
+      "Create",
+      "Delete",
+      "List",
+      "Get",
     ]
  
     secret_permissions = [
-      "set",
-      "delete",
-      "list",
-      "get",
+      "Set",
+      "Delete",
+      "List",
+      "Get",
     ]
  
     certificate_permissions = [
-      "get",
-      "list",
-      "delete",
+      "Get",
+      "List",
+      "Delete",
     ]
   }
 }
