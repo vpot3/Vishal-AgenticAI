@@ -48,20 +48,23 @@ steps:
     azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
+    inlineScript: 'echo'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
     inlineScript: |
         echo "Getting storage key..."
-        ACCOUNT_KEY=$(az storage account keys list \
-           --account-name $(storageAccount) \
-           --query "[0].value" -o tsv)
+        ACCOUNT_KEY=$(az storage account keys list --account-name $(storageAccount) --query "[0].value" -o tsv)
         
         echo "Downloading main.tf..."
         az storage blob download \
-           --account-name $(storageAccount) \ 
+           --account-name straccagenticai \ 
            --account-key "$ACCOUNT_KEY" \
-           --container-name $(containerName) \
-           --name $(blobName) \
-           --file $(downloadPath)
-           
+           --container-name terraformfiles \
+           --name main.tf \
+           --file "$(Pipeline.Workspace)/main.tf"
            ls -l $(Pipeline.Workspace)   
         echo "Download complete: $(downloadPath)"
   displayName: "Download Main.tf file"
