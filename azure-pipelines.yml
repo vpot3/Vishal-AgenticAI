@@ -79,12 +79,23 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-- script: |
-     ls -la "$(Pipeline.Workspace)"
-     terraform init
-     terraform plan
-  workingDirectory: $(Pipeline.Workspace)
-  displayName: 'Terraform Init'
+# - script: |
+#      ls -la "$(Pipeline.Workspace)"
+#      terraform init
+#      terraform plan
+#   workingDirectory: $(Pipeline.Workspace)
+#   displayName: 'Terraform Init'
+  
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(da2d52da-2e04-4dd4-b37a-0fea54660754)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform init
+      terraform plan
+  displayName: 'Terraform Init and Plan'
+      
 # - task: TerraformTaskV4@4
 #   displayName: 'Terraform Init'
 #   inputs:
