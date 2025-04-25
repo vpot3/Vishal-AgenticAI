@@ -82,7 +82,7 @@ steps:
 - script: |
      ls -la "$(Pipeline.Workspace)"
      terraform init
-     terrform plan
+     terraform plan
   workingDirectory: $(Pipeline.Workspace)
   displayName: 'Terraform Plan'
 # - task: TerraformTaskV4@4
