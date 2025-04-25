@@ -57,11 +57,12 @@ steps:
         echo "Downloading main.tf..."
         az storage blob download \
            --account-name $(storageAccount) \ 
-           --account-key $ACCOUNT_KEY \
+           --account-key "$ACCOUNT_KEY" \
            --container-name $(containerName) \
            --name $(blobName) \
            --file $(downloadPath)
-     
+           
+           ls -l $(Pipeline.Workspace)   
         echo "Download complete: $(downloadPath)"
   displayName: "Download Main.tf file"
 
