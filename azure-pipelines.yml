@@ -81,10 +81,10 @@ steps:
     terraformVersion: 'latest'
 
 - script: |
-     ls -la $(Build.SourceDirectory)
+     ls -la $(Pipeline.Workspace)/main.tf
      terraform init
      terrform plan
-  workingDirectory: $(Build.SourceDirectory)
+  workingDirectory: $(Pipeline.Workspace)
   displayName: 'Terraform Plan'
 # - task: TerraformTaskV4@4
 #   displayName: 'Terraform Init'
