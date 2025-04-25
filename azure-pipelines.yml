@@ -59,13 +59,14 @@ steps:
         ACCOUNT_KEY=$(az storage account keys list --account-name $(storageAccount) --query "[0].value" -o tsv)
         echo $ACCOUNT_KEY
         echo "Downloading main.tf..."
-        az storage blob download \
-           --account-name straccagenticai \ 
-           --account-key "$ACCOUNT_KEY" \
-           --container-name terraformfiles \
-           --name main.tf \
-           --file "$(Pipeline.Workspace)/main.tf"
-           ls -l "$(Pipeline.Workspace)"
+        # az storage blob download \
+        #    --account-name straccagenticai \ 
+        #    --account-key "$ACCOUNT_KEY" \
+        #    --container-name terraformfiles \
+        #    --name main.tf \
+        #    --file "$(Pipeline.Workspace)/main.tf"
+        #    ls -l "$(Pipeline.Workspace)"
+        az storage blob download --account-name straccagenticai --account-key "$account_key" --container-name "terraformfiles" --name main.tf 
         echo "Download complete: $(downloadPath)"
   displayName: "Download Main.tf file"
 
