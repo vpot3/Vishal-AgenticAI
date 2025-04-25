@@ -65,7 +65,7 @@ steps:
            --container-name terraformfiles \
            --name main.tf \
            --file "$(Pipeline.Workspace)/main.tf"
-           ls -l $(Pipeline.Workspace)   
+           ls -l "$(Pipeline.Workspace)"
         echo "Download complete: $(downloadPath)"
   displayName: "Download Main.tf file"
 
