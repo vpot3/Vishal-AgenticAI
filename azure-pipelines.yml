@@ -66,7 +66,7 @@ steps:
   displayName: "Download Main.tf file"
 
 - script: |
-    ls -la $(Pipeline.Workspace)
+    ls -la $(Pipeline.Workspace)/main.tf
     # mv $(Pipeline.Workspace)/main.tf $(Build.SourceDirectory)/main.tf
   displayName: 'Move .tf to build directory
   '
