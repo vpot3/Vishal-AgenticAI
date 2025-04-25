@@ -81,8 +81,8 @@ steps:
 
 - script: |
      ls -la "$(Pipeline.Workspace)"
+     az login
      terraform init
-    
   workingDirectory: $(Pipeline.Workspace)
   displayName: 'Terraform Init'
 # - task: TerraformTaskV4@4
