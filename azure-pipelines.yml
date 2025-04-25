@@ -66,7 +66,8 @@ steps:
   displayName: "Download Main.tf file"
 
 - script: |
-    mv $(Pipeline.Workspace)/main.tf $(Build.SourceDirectory)/main.tf
+    ls -la $(Pipeline.Workspace)
+    # mv $(Pipeline.Workspace)/main.tf $(Build.SourceDirectory)/main.tf
   displayName: 'Move .tf to build directory
   '
 - task: TerraformInstaller@1
