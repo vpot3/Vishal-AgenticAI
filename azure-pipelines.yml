@@ -71,17 +71,16 @@ steps:
         echo "Download complete: $(downloadPath)"
   displayName: "Download Main.tf file"
 
-- script: |
-    ls -la $(Pipeline.Workspace)/main.tf
-    # mv $(Pipeline.Workspace)/main.tf $(Build.SourceDirectory)/main.tf
-  displayName: 'Move .tf to build directory
-  '
+# - script: |
+#     ls -la $(Pipeline.Workspace)/main.tf
+#     # mv $(Pipeline.Workspace)/main.tf $(Build.SourceDirectory)/main.tf
+#   displayName: 'Move .tf to build directory'
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
 
 - script: |
-     ls -la $(Pipeline.Workspace)/main.tf
+     ls -la "$(Pipeline.Workspace)"
      terraform init
      terrform plan
   workingDirectory: $(Pipeline.Workspace)
