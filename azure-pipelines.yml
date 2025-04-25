@@ -94,6 +94,7 @@ steps:
     inlineScript: |
       terraform init
       terraform plan
+    workingDirectory: '$(Pipeline.Workspace)'
   displayName: 'Terraform Init and Plan'
       
 # - task: TerraformTaskV4@4
