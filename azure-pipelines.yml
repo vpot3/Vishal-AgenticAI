@@ -94,8 +94,9 @@ steps:
     inlineScript: |
       terraform init
       terraform plan
+      terraform apply -auto-approve
     workingDirectory: '$(Pipeline.Workspace)'
-  displayName: 'Terraform Init and Plan'
+  displayName: 'Terraform Init and Plan and apply'
       
 # - task: TerraformTaskV4@4
 #   displayName: 'Terraform Init'
