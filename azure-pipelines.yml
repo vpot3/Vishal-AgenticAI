@@ -72,7 +72,7 @@ steps:
 - script: |
      terraform init
      terrform plan -out=tfplan
-  workingDirectory: $(Pipelin.Workspace)
+  workingDirectory: $(Pipeline.Workspace)
   displayName: 'Terraform Plan'
 # - task: TerraformTaskV4@4
 #   displayName: 'Terraform Init'
